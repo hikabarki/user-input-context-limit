@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  token-flow-extender:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: token-flow-extender:1.0.0
+    environment:
+      - TFE_SAFETY_MARGIN=0.85
+      - TFE_STORAGE_BACKEND=sqlite
+      - TFE_DB_PATH=/data/token_flow.db
+      - TFE_REGISTRY_PATH=/app/model_limits.yaml
+    volumes:
+      - tfe-data:/data
+      - ./model_limits.yaml:/app/model_limits.yaml:ro
+    ports:
+      - "8800:8800"
+    command: uvicorn examples.fastapi_integration:app --host 0.0.0.0 --port 8800
+    restart: unless-stopped
+
+  # Optional Redis checkpoint backend (set TFE_STORAGE_BACKEND=redis to use)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+volumes:
+  tfe-data:

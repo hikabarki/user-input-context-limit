@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "token-flow-extender"
+version = "1.0.0"
+description = "Lossless unlimited-input processing layer for any LLM. Streams oversized inputs through dynamically sized windows with 100 percent token coverage, checkpointing, and fail-open integration."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Keural Platform Team" }]
+keywords = ["llm", "context-window", "token-limit", "chunking", "map-reduce", "lossless"]
+dependencies = [
+    "pydantic>=2.5",
+    "PyYAML>=6.0",
+    "httpx>=0.25",
+]
+
+[project.optional-dependencies]
+fastapi = ["fastapi>=0.104", "uvicorn>=0.24"]
+redis = ["redis>=5.0"]
+hf = ["transformers>=4.40"]
+dev = [
+    "pytest>=7.4",
+    "pytest-asyncio>=0.23",
+    "pytest-cov>=4.1",
+    "fastapi>=0.104",
+    "uvicorn>=0.24",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["src/token_flow_extender"]

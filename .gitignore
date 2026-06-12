@@ -1,0 +1,23 @@
+# Host repos — not ours
+mkd-keural-be-fastapi-main/
+mkd-keural-api-rag-main/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+dist/
+build/
+
+# Env & secrets
+.env
+*.db
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# OS
+.DS_Store
